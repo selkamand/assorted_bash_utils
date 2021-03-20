@@ -1,0 +1,12 @@
+#%Module1.0
+## template modulefile
+
+## Add bin directory to path
+prepend-path PATH __TOOLPATH__
+setenv __TOOLNAME___PATH __TOOLPATH__
+
+if [ module-info mode load ] {
+	puts stderr "Loaded __toolname__ __VERSION__"
+	puts stderr "Path: __TOOLPATH__"
+	puts stderr "Added environment variable: __TOOLNAME___PATH"
+}
