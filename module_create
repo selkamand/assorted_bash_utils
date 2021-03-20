@@ -1,1 +1,45 @@
-/usr/local/bin/module_create
+#!/usr/bin/env bash
+
+set -euo pipefail
+
+#Path to template
+template="/usr/local/Cellar/modules/4.5.0/modulefiles/template"
+modulefile_folder="/usr/local/Cellar/modules/4.5.0/modulefiles"
+
+#Functions
+echoerr() { echo "$@" 1>&2; }
+usage(){ echoerr "$0 <path_to_tool> <module_file_name> [version]"; }
+
+
+
+#Parse input
+toolpath=""
+if [ $# -lt 2 ]; then echoerr "[ERROR] Too few arguments"; usage; exit 1; fi
+if [ "$1" = "-h" ]; then usage; exit 1; fi
+
+#Find Path
+if [ -d "/Users/selkamand/tools/$1" ]; then
+	toolpath="$(realpath $1)"; echoerr "Found tool in tool directory";
+elif [ -d "$1" ]; then
+	toolpath="$(realpath $1)"; echoerr "Found tool"
+else
+	echoerr "[ERROR] Could not find tool. Make sure it is in the ~/tools folder or supply full path"; exit 1
+fi
+
+#if [ ! -d "$1" ]; then echoerr "[ERROR] Could not find tool. Make sure its in the ~/tools folder"; exit 1; fi
+
+#DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" >/dev/null 2>&1 && pwd )"
+toolname=$2
+TOOLNAME=$(echo "$toolname" | tr '[:lower:]' '[:upper:]')
+version=""
+if [ $# -eq 3 ]; then version="($3)"; fi
+
+#3 variables to replace
+	#1 __TOOLPATH__
+	#2 __TOOLPATH_VARIABLE__
+	#3 __VERSION__
+
+sed "s%__TOOLPATH__%$toolpath%g" $template |\
+sed "s%__TOOLNAME__%$TOOLNAME%g" |\
+sed "s%__toolname__%$toolname%g" |\
+sed "s%__VERSION__%$version%g" > $modulefile_folder/$toolname
