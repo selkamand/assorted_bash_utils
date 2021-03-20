@@ -1,0 +1,7 @@
+c_normal="\e[0m"
+c_bold="\e[1m"
+c_red="\e[31m"
+c_green="\e[32m"
+c_cyan="\e[96"
+c_magenta="\e[35m"
+c_underlined="\e[4m"
