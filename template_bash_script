@@ -51,12 +51,12 @@ function echoerrsuccess() {
 function test_dependencies() {
     failed=false
     for dependency in $@; do
-
-        if which $dependency; then
-            if "$verbose"; then
-                echoerr "Testing Dependencies: "
-                echoerr " $dependency"
-                echoerrsuccess "    > $(which $dependency)"
+      dependency_path=$(which $dependency)
+        if [[ -n $dependency_path ]]; then
+          if "$verbose"; then
+              echoerr "Testing Dependencies: "
+              echoerr " $dependency"
+              echoerrsuccess "    > $dependency_path"
             fi
         else
             echoerr "Testing Dependencies: "
