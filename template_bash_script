@@ -72,7 +72,7 @@ function test_dependencies() {
     elif $verbose; then
         echoerr ""
     fi
-}
+} 
 
 # Usage
 function usage() {
