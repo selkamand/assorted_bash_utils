@@ -2,9 +2,12 @@
 
 set -euo pipefail
 
+SCRIPT_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" &> /dev/null && pwd )"
+
+
 #Path to template
-template="/usr/local/Cellar/modules/4.5.0/modulefiles/template"
-modulefile_folder="/usr/local/Cellar/modules/4.5.0/modulefiles"
+template=$SCRIPT_DIR/template
+modulefile_folder="/home/sam/tools/modulefiles"
 
 #Functions
 echoerr() { echo "$@" 1>&2; }
@@ -14,6 +17,9 @@ usage(){ echoerr "$0 <path_to_tool> <module_file_name> [version]"; }
 
 #Parse input
 toolpath=""
+
+if [ ! -f $template ]; then echoerr "[ERROR] could not find 'template' file: $template"; exit 1; fi
+
 if [ $# -lt 2 ]; then echoerr "[ERROR] Too few arguments"; usage; exit 1; fi
 if [ "$1" = "-h" ]; then usage; exit 1; fi
 
