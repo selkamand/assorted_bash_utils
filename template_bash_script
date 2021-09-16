@@ -72,13 +72,13 @@ function test_dependencies() {
     elif $verbose; then
         echoerr ""
     fi
-} 
+}
 
 # Usage
 function usage() {
-    echoerr "$0 <positional argument>"
-    echoerr " -v | --version    )   print version"
-    echoerr " -h | --help       )   print this help message"
+    echoerr "$0 <positional argument>
+    -v | --version     print version
+    -h | --help        print this help message"
     exit 1
 }
 
@@ -118,12 +118,7 @@ test_dependencies ${dependencies[@]}
 
 #Options for qc
 #Ensure postitional argument is supplied
-if [ $positional_arg == "NA" ]; then
-    echoerrfail "Must supply a positional argument"
-fi
+[ $positional_arg == "NA" ] && { echoerrfail "Must supply a positional argument"; usage; exit 1; }
 
 #Check if file exists
-if [ ! -f "$positional_arg" ]; then
-    echoerrfail "Cannot find file: $positional_arg"
-    usage
-fi
+[ ! -f "$positional_arg" ] && { echoerrfail "Cannot find file: $positional_arg"; usage; exit 1; }
